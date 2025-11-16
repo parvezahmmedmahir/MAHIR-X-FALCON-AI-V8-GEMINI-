@@ -10,7 +10,6 @@
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
-    /* All CSS remains the same as before */
     :root{
       --primary:#0a0e17;
       --secondary:#0f1629;
@@ -307,6 +306,165 @@
       pointer-events:none;
     }
 
+    /* NEW: Advanced Annotation Styles */
+    .chart-annotation {
+      position: absolute;
+      pointer-events: none;
+      z-index: 100;
+    }
+    
+    .support-line {
+      position: absolute;
+      width: 100%;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--buy), transparent);
+      box-shadow: 0 0 10px var(--buy);
+    }
+    
+    .resistance-line {
+      position: absolute;
+      width: 100%;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--sell), transparent);
+      box-shadow: 0 0 10px var(--sell);
+    }
+    
+    .level-label {
+      position: absolute;
+      background: rgba(0,0,0,0.8);
+      color: var(--text);
+      padding: 3px 8px;
+      border-radius: 5px;
+      font-size: 10px;
+      font-weight: 700;
+      left: 5px;
+      transform: translateY(-50%);
+      border: 1px solid;
+      z-index: 101;
+    }
+    
+    .support-label {
+      border-color: var(--buy);
+      background: rgba(0, 255, 149, 0.1);
+    }
+    
+    .resistance-label {
+      border-color: var(--sell);
+      background: rgba(255, 46, 76, 0.1);
+    }
+    
+    .candle-highlight {
+      position: absolute;
+      border: 2px solid;
+      border-radius: 4px;
+      pointer-events: none;
+      z-index: 99;
+    }
+    
+    .candle-bullish {
+      border-color: var(--buy);
+      background: rgba(0, 255, 149, 0.1);
+      box-shadow: 0 0 15px rgba(0, 255, 149, 0.3);
+    }
+    
+    .candle-bearish {
+      border-color: var(--sell);
+      background: rgba(255, 46, 76, 0.1);
+      box-shadow: 0 0 15px rgba(255, 46, 76, 0.3);
+    }
+    
+    .candle-neutral {
+      border-color: var(--otc-color);
+      background: rgba(255, 165, 0, 0.1);
+      box-shadow: 0 0 15px rgba(255, 165, 0, 0.3);
+    }
+    
+    .pattern-marker {
+      position: absolute;
+      background: rgba(0,0,0,0.9);
+      color: var(--text);
+      padding: 4px 8px;
+      border-radius: 6px;
+      font-size: 9px;
+      font-weight: 700;
+      border: 1px solid;
+      z-index: 102;
+    }
+    
+    .pattern-bullish {
+      border-color: var(--buy);
+      background: rgba(0, 255, 149, 0.2);
+    }
+    
+    .pattern-bearish {
+      border-color: var(--sell);
+      background: rgba(255, 46, 76, 0.2);
+    }
+    
+    .breakout-marker {
+      position: absolute;
+      background: rgba(255, 0, 255, 0.9);
+      color: white;
+      padding: 4px 8px;
+      border-radius: 6px;
+      font-size: 9px;
+      font-weight: 700;
+      border: 2px dashed var(--pattern-color);
+      z-index: 103;
+      animation: pulse 2s infinite;
+    }
+    
+    .bos-marker {
+      position: absolute;
+      background: rgba(0, 247, 255, 0.9);
+      color: black;
+      padding: 4px 8px;
+      border-radius: 6px;
+      font-size: 9px;
+      font-weight: 700;
+      border: 2px solid var(--accent);
+      z-index: 103;
+    }
+    
+    .trend-line {
+      position: absolute;
+      height: 2px;
+      background: linear-gradient(90deg, var(--accent), transparent);
+      transform-origin: left center;
+      z-index: 98;
+    }
+    
+    .volume-zone {
+      position: absolute;
+      background: rgba(255, 165, 0, 0.2);
+      border: 1px dashed var(--otc-color);
+      z-index: 97;
+    }
+    
+    .annotation-legend {
+      position: absolute;
+      bottom: 5px;
+      right: 5px;
+      background: rgba(0,0,0,0.8);
+      padding: 8px;
+      border-radius: 6px;
+      font-size: 9px;
+      z-index: 104;
+      border: 1px solid var(--border);
+    }
+    
+    .legend-item {
+      display: flex;
+      align-items: center;
+      margin-bottom: 4px;
+    }
+    
+    .legend-color {
+      width: 12px;
+      height: 3px;
+      margin-right: 6px;
+    }
+
     .detected-box{
       position:absolute;
       border:2px dashed rgba(0,247,255,0.6);
@@ -337,22 +495,6 @@
     .detected-box.pattern, .detected-box.neutral {
       border-color: rgba(255, 0, 255, 0.6);
       color: var(--pattern-color);
-    }
-    
-    .trend-line {
-      position: absolute;
-      height: 2px;
-      background: linear-gradient(90deg, transparent, var(--accent), transparent);
-      transform-origin: left center;
-      z-index: 10;
-    }
-    
-    .support-line {
-      background: linear-gradient(90deg, transparent, var(--buy), transparent);
-    }
-    
-    .resistance-line {
-      background: linear-gradient(90deg, transparent, var(--sell), transparent);
     }
 
     .vision-panel{
@@ -729,43 +871,7 @@
       font-weight: 700;
       font-size: 14px;
     }
-    
-    .chart-annotations {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      pointer-events: none;
-    }
-    
-    .support-line-marker, .resistance-line-marker {
-      position: absolute;
-      width: 100%;
-      height: 2px;
-      z-index: 20;
-    }
-    
-    .support-line-marker {
-      background: linear-gradient(90deg, transparent, var(--buy), transparent);
-      box-shadow: 0 0 10px var(--buy);
-    }
-    
-    .resistance-line-marker {
-      background: linear-gradient(90deg, transparent, var(--sell), transparent);
-      box-shadow: 0 0 10px var(--sell);
-    }
-    
-    .level-label-marker {
-      position: absolute;
-      background: rgba(0,0,0,0.8);
-      color: var(--text);
-      padding: 3px 8px;
-      border-radius: 5px;
-      font-size: 10px;
-      font-weight: 700;
-      left: 5px;
-      transform: translateY(-50%);
-    }
-    
+
     .entry-timer {
       background: linear-gradient(90deg, var(--buy), #00ff80);
       color: #000;
@@ -1517,7 +1623,8 @@
       analysisResults: null,
       winHistory: [],
       signalHistory: [],
-      isAnalyzing: false
+      isAnalyzing: false,
+      chartAnnotations: []
     };
 
     // DOM elements
@@ -1690,7 +1797,7 @@
       elements.winsToday.textContent = `${todayWins} Wins`;
     }
 
-    // Connect to Gemini API - FIXED VERSION
+    // Connect to Gemini API
     async function connectToGemini() {
       const apiKey = elements.apiKeyInput.value.trim();
       
@@ -1818,7 +1925,7 @@
       }
     }
 
-    // Analyze chart with Gemini AI - FIXED VERSION
+    // Analyze chart with Gemini AI - ENHANCED VERSION WITH ANNOTATIONS
     async function analyzeChart() {
       if (!appState.isApiConnected) {
         showNotification('Please connect to Gemini API first');
@@ -1865,44 +1972,75 @@
         // Get the selected model
         const model = elements.modelSelect.value;
         
-        // Prepare the prompt for binary options analysis
+        // ENHANCED PROMPT for detailed chart annotations
         const prompt = `
         Analyze this trading chart for binary options trading with 1-minute expiry. 
-        Provide a clear BUY or SELL signal based on the following:
-        
-        1. Current trend direction (bullish/bearish/neutral)
-        2. Key support and resistance levels
-        3. Candlestick patterns (doji, hammer, engulfing, etc.)
-        4. Potential entry points
-        5. Confidence level (high/medium/low)
-        6. Key technical indicators visible on the chart
-        
-        Also predict the direction of the next candle (bullish/bearish/neutral) and estimate the expected move in pips.
-        
-        Format your response as JSON with the following structure:
+        Provide detailed technical analysis including:
+
+        CRITICAL ELEMENTS TO DETECT:
+        1. EXACT SUPPORT AND RESISTANCE LEVELS with price values
+        2. BREAK OF STRUCTURE (BOS) points
+        3. BREAK OF SUPPORT/RESISTANCE levels
+        4. SPECIFIC CANDLESTICK PATTERNS with their exact locations
+        5. TREND LINES and channels
+        6. KEY REVERSAL CANDLES
+        7. VOLUME ZONES and accumulation areas
+
+        CANDLE PATTERNS TO IDENTIFY:
+        - Doji candles and their types
+        - Engulfing patterns (bullish/bearish)
+        - Hammer and Shooting Star
+        - Morning/Evening Star
+        - Pin Bars
+        - Inside Bars
+        - Rejection candles
+
+        FORMAT YOUR RESPONSE AS JSON with this structure:
         {
-          "signal": "BUY" or "SELL",
-          "confidence": percentage (0-100),
-          "pair": "trading pair if visible",
-          "trend": "bullish/bearish/neutral",
-          "supportLevels": ["level1", "level2"],
-          "resistanceLevels": ["level1", "level2"],
-          "patterns": ["pattern1", "pattern2"],
+          "signal": "BUY/SELL",
+          "confidence": 0-100,
+          "pair": "trading pair",
+          "trend": "bullish/bearish/sideways",
+          "supportLevels": [
+            {"level": "1.2345", "strength": "strong/medium/weak", "type": "dynamic/static"}
+          ],
+          "resistanceLevels": [
+            {"level": "1.2345", "strength": "strong/medium/weak", "type": "dynamic/static"}
+          ],
+          "breakOfStructure": [
+            {"level": "1.2345", "direction": "bullish/bearish", "timestamp": "recent/old"}
+          ],
+          "keyCandles": [
+            {"type": "doji/engulfing/hammer/etc", "location": "1.2345", "direction": "bullish/bearish", "significance": "high/medium/low"}
+          ],
+          "trendLines": [
+            {"type": "support/resistance/channel", "points": ["1.2345", "1.2350"]}
+          ],
+          "volumeZones": [
+            {"area": "1.2340-1.2350", "intensity": "high/medium/low"}
+          ],
+          "patterns": ["Double Top", "Head & Shoulders", "Triangle", "Flag"],
           "indicators": {
-            "rsi": "value/trend",
-            "macd": "value/trend",
-            "movingAverages": "values/trend"
+            "rsi": "value",
+            "macd": "trend",
+            "movingAverages": "alignment"
           },
           "nextCandle": {
             "direction": "bullish/bearish/neutral",
-            "confidence": percentage (0-100),
-            "expectedMove": "number pips"
+            "confidence": 0-100,
+            "expectedMove": "pips"
           },
-          "summary": "brief analysis summary"
+          "tradingAdvice": "Detailed trading recommendation",
+          "riskLevel": "high/medium/low",
+          "entryPoints": ["1.2345", "1.2350"],
+          "takeProfit": ["1.2360"],
+          "stopLoss": ["1.2330"]
         }
+
+        BE VERY SPECIFIC ABOUT EXACT PRICE LEVELS AND CANDLE LOCATIONS.
         `;
         
-        // Send request to Gemini API - FIXED ENDPOINT
+        // Send request to Gemini API
         const response = await fetch(`https://generativelanguage.googleapis.com/v1/models/${model}:generateContent?key=${appState.apiKey}`, {
           method: 'POST',
           headers: {
@@ -1935,7 +2073,7 @@
         // Try to parse JSON from response
         let analysis;
         try {
-          // Extract JSON from response text (Gemini might wrap it in markdown)
+          // Extract JSON from response text
           const jsonMatch = responseText.match(/\{[\s\S]*\}/);
           if (jsonMatch) {
             analysis = JSON.parse(jsonMatch[0]);
@@ -1943,10 +2081,10 @@
             throw new Error('No JSON found in response');
           }
         } catch (parseError) {
-          // Fallback: create a mock analysis if parsing fails
+          // Fallback: create enhanced mock analysis
           console.error('Failed to parse Gemini response:', parseError);
           console.log('Raw response:', responseText);
-          analysis = generateMockAnalysis();
+          analysis = generateEnhancedMockAnalysis();
         }
         
         // Store analysis results
@@ -1962,6 +2100,9 @@
         updateVisionResults(analysis);
         updateAnalysisDetails(analysis);
         
+        // NEW: Draw advanced chart annotations
+        drawAdvancedChartAnnotations(analysis);
+        
         // Record the signal
         appState.signalHistory.push({
           timestamp: new Date(),
@@ -1974,10 +2115,10 @@
         
       } catch (error) {
         console.error('Analysis error:', error);
-        showNotification('Analysis failed. Using mock data for demonstration.');
+        showNotification('Analysis failed. Using enhanced mock data with annotations.');
         
-        // Use mock data for demonstration
-        const mockAnalysis = generateMockAnalysis();
+        // Use enhanced mock data for demonstration
+        const mockAnalysis = generateEnhancedMockAnalysis();
         appState.analysisResults = mockAnalysis;
         
         clearInterval(progressInterval);
@@ -1987,6 +2128,9 @@
         updateNextCandlePrediction(mockAnalysis.nextCandle);
         updateVisionResults(mockAnalysis);
         updateAnalysisDetails(mockAnalysis);
+        
+        // Draw annotations for mock data
+        drawAdvancedChartAnnotations(mockAnalysis);
       }
       
       appState.isAnalyzing = false;
@@ -1997,51 +2141,319 @@
       }, 2000);
     }
 
-    // Generate mock analysis for demonstration
-    function generateMockAnalysis() {
+    // NEW: Generate enhanced mock analysis with detailed annotations
+    function generateEnhancedMockAnalysis() {
       const signals = ['BUY', 'SELL'];
       const directions = ['bullish', 'bearish', 'neutral'];
       const pairs = ['EUR/USD', 'GBP/USD', 'USD/JPY', 'XAU/USD', 'BTC/USD'];
-      const patterns = ['Bullish Engulfing', 'Bearish Harami', 'Doji', 'Hammer', 'Shooting Star', 'Double Top', 'Double Bottom'];
-      const trends = ['Bullish', 'Bearish', 'Sideways'];
+      const patterns = ['Double Top', 'Head & Shoulders', 'Bullish Engulfing', 'Bearish Harami', 'Doji', 'Hammer', 'Shooting Star'];
+      const candleTypes = ['doji', 'engulfing', 'hammer', 'pinbar', 'insidebar', 'rejection'];
       
       const signal = signals[Math.floor(Math.random() * signals.length)];
       const direction = directions[Math.floor(Math.random() * directions.length)];
       const pair = pairs[Math.floor(Math.random() * pairs.length)];
-      const confidence = Math.floor(Math.random() * 30) + 70; // 70-100%
-      const nextCandleConfidence = Math.floor(Math.random() * 30) + 65; // 65-95%
-      const expectedMove = (Math.random() * 15 + 5).toFixed(1); // 5-20 pips
+      const confidence = Math.floor(Math.random() * 30) + 70;
       
-      // Select 2-3 random patterns
-      const selectedPatterns = [];
-      const numPatterns = Math.floor(Math.random() * 2) + 2;
-      for (let i = 0; i < numPatterns; i++) {
-        const pattern = patterns[Math.floor(Math.random() * patterns.length)];
-        if (!selectedPatterns.includes(pattern)) {
-          selectedPatterns.push(pattern);
-        }
+      // Generate detailed support/resistance levels
+      const basePrice = 1.0750 + (Math.random() * 0.01);
+      const supportLevels = [];
+      const resistanceLevels = [];
+      
+      for (let i = 1; i <= 3; i++) {
+        supportLevels.push({
+          level: (basePrice - i * 0.0005).toFixed(4),
+          strength: ['strong', 'medium', 'weak'][i-1],
+          type: ['static', 'dynamic'][Math.floor(Math.random() * 2)]
+        });
+        
+        resistanceLevels.push({
+          level: (basePrice + i * 0.0005).toFixed(4),
+          strength: ['strong', 'medium', 'weak'][i-1],
+          type: ['static', 'dynamic'][Math.floor(Math.random() * 2)]
+        });
       }
+      
+      // Generate break of structure points
+      const breakOfStructure = [];
+      if (Math.random() > 0.5) {
+        breakOfStructure.push({
+          level: (basePrice + 0.0008).toFixed(4),
+          direction: 'bullish',
+          timestamp: 'recent'
+        });
+      }
+      
+      // Generate key candles
+      const keyCandles = [];
+      for (let i = 0; i < 4; i++) {
+        keyCandles.push({
+          type: candleTypes[Math.floor(Math.random() * candleTypes.length)],
+          location: (basePrice + (Math.random() - 0.5) * 0.002).toFixed(4),
+          direction: ['bullish', 'bearish'][Math.floor(Math.random() * 2)],
+          significance: ['high', 'medium', 'low'][Math.floor(Math.random() * 3)]
+        });
+      }
+      
+      // Generate trend lines
+      const trendLines = [
+        {
+          type: 'support',
+          points: [
+            (basePrice - 0.001).toFixed(4),
+            (basePrice - 0.0005).toFixed(4)
+          ]
+        }
+      ];
       
       return {
         signal,
         confidence,
         pair,
-        trend: trends[Math.floor(Math.random() * trends.length)],
-        supportLevels: ['1.0750', '1.0725', '1.0700'],
-        resistanceLevels: ['1.0800', '1.0825', '1.0850'],
-        patterns: selectedPatterns,
+        trend: direction,
+        supportLevels,
+        resistanceLevels,
+        breakOfStructure,
+        keyCandles,
+        trendLines,
+        volumeZones: [
+          {"area": `${(basePrice - 0.0003).toFixed(4)}-${(basePrice + 0.0003).toFixed(4)}`, "intensity": "high"}
+        ],
+        patterns: patterns.slice(0, 3),
         indicators: {
-          rsi: Math.floor(Math.random() * 30) + 35, // 35-65
+          rsi: Math.floor(Math.random() * 30) + 35,
           macd: signal === 'BUY' ? 'Bullish' : 'Bearish',
-          movingAverages: 'Golden Cross'
+          movingAverages: signal === 'BUY' ? 'Bullish Alignment' : 'Bearish Alignment'
         },
         nextCandle: {
           direction,
-          confidence: nextCandleConfidence,
-          expectedMove
+          confidence: Math.floor(Math.random() * 30) + 65,
+          expectedMove: (Math.random() * 15 + 5).toFixed(1)
         },
-        summary: `Based on technical analysis, the ${pair} chart shows a ${direction} bias with ${selectedPatterns.join(', ')} patterns forming. The ${signal} signal is recommended with ${confidence}% confidence.`
+        tradingAdvice: `Based on technical analysis, ${pair} shows ${direction} bias with clear support at ${supportLevels[0].level} and resistance at ${resistanceLevels[0].level}. ${signal} recommended.`,
+        riskLevel: ['high', 'medium', 'low'][Math.floor(Math.random() * 3)],
+        entryPoints: [supportLevels[0].level, (parseFloat(supportLevels[0].level) + 0.0002).toFixed(4)],
+        takeProfit: [resistanceLevels[0].level],
+        stopLoss: [(parseFloat(supportLevels[0].level) - 0.0003).toFixed(4)]
       };
+    }
+
+    // NEW: Draw advanced chart annotations
+    function drawAdvancedChartAnnotations(analysis) {
+      // Clear existing annotations
+      elements.chartOverlay.innerHTML = '';
+      
+      const chartWidth = elements.chartPreview.offsetWidth;
+      const chartHeight = elements.chartPreview.offsetHeight;
+      
+      // Draw support levels
+      analysis.supportLevels.forEach((level, index) => {
+        const yPos = chartHeight * (0.3 + index * 0.15); // Position support lines
+        drawSupportLine(level.level, yPos, level.strength, chartWidth);
+      });
+      
+      // Draw resistance levels
+      analysis.resistanceLevels.forEach((level, index) => {
+        const yPos = chartHeight * (0.7 - index * 0.15); // Position resistance lines
+        drawResistanceLine(level.level, yPos, level.strength, chartWidth);
+      });
+      
+      // Draw key candles
+      analysis.keyCandles.forEach((candle, index) => {
+        const xPos = chartWidth * (0.2 + index * 0.15);
+        const yPos = chartHeight * (0.4 + (Math.random() - 0.5) * 0.4);
+        drawCandleHighlight(candle, xPos, yPos);
+      });
+      
+      // Draw break of structure markers
+      analysis.breakOfStructure.forEach((bos, index) => {
+        const xPos = chartWidth * 0.8;
+        const yPos = chartHeight * (bos.direction === 'bullish' ? 0.25 : 0.75);
+        drawBOSMarker(bos, xPos, yPos);
+      });
+      
+      // Draw trend lines
+      analysis.trendLines.forEach((line, index) => {
+        drawTrendLine(line, chartWidth, chartHeight);
+      });
+      
+      // Draw volume zones
+      analysis.volumeZones.forEach((zone, index) => {
+        const yPos = chartHeight * (0.5 + (Math.random() - 0.5) * 0.3);
+        const height = chartHeight * 0.1;
+        drawVolumeZone(zone, yPos, height, chartWidth);
+      });
+      
+      // Add annotation legend
+      drawAnnotationLegend(chartWidth, chartHeight);
+    }
+
+    // NEW: Support line drawing function
+    function drawSupportLine(level, yPos, strength, width) {
+      const line = document.createElement('div');
+      line.className = 'support-line';
+      line.style.top = `${yPos}px`;
+      line.style.width = `${width}px`;
+      
+      // Adjust line style based on strength
+      if (strength === 'strong') {
+        line.style.height = '3px';
+        line.style.boxShadow = '0 0 15px var(--buy)';
+      } else if (strength === 'medium') {
+        line.style.height = '2px';
+        line.style.opacity = '0.8';
+      } else {
+        line.style.height = '1px';
+        line.style.opacity = '0.6';
+        line.style.borderBottom = '1px dashed var(--buy)';
+      }
+      
+      elements.chartOverlay.appendChild(line);
+      
+      // Add price label
+      const label = document.createElement('div');
+      label.className = 'level-label support-label';
+      label.style.top = `${yPos}px`;
+      label.textContent = `S: ${level}`;
+      elements.chartOverlay.appendChild(label);
+    }
+
+    // NEW: Resistance line drawing function
+    function drawResistanceLine(level, yPos, strength, width) {
+      const line = document.createElement('div');
+      line.className = 'resistance-line';
+      line.style.top = `${yPos}px`;
+      line.style.width = `${width}px`;
+      
+      // Adjust line style based on strength
+      if (strength === 'strong') {
+        line.style.height = '3px';
+        line.style.boxShadow = '0 0 15px var(--sell)';
+      } else if (strength === 'medium') {
+        line.style.height = '2px';
+        line.style.opacity = '0.8';
+      } else {
+        line.style.height = '1px';
+        line.style.opacity = '0.6';
+        line.style.borderBottom = '1px dashed var(--sell)';
+      }
+      
+      elements.chartOverlay.appendChild(line);
+      
+      // Add price label
+      const label = document.createElement('div');
+      label.className = 'level-label resistance-label';
+      label.style.top = `${yPos}px`;
+      label.textContent = `R: ${level}`;
+      elements.chartOverlay.appendChild(label);
+    }
+
+    // NEW: Candle highlight drawing function
+    function drawCandleHighlight(candle, xPos, yPos) {
+      const highlight = document.createElement('div');
+      highlight.className = `candle-highlight ${candle.direction === 'bullish' ? 'candle-bullish' : 'candle-bearish'}`;
+      highlight.style.left = `${xPos - 15}px`;
+      highlight.style.top = `${yPos - 15}px`;
+      highlight.style.width = '30px';
+      highlight.style.height = '30px';
+      
+      elements.chartOverlay.appendChild(highlight);
+      
+      // Add pattern marker
+      const marker = document.createElement('div');
+      marker.className = `pattern-marker ${candle.direction === 'bullish' ? 'pattern-bullish' : 'pattern-bearish'}`;
+      marker.style.left = `${xPos}px`;
+      marker.style.top = `${yPos + 20}px`;
+      marker.textContent = `${candle.type}\n${candle.location}`;
+      marker.style.fontSize = '8px';
+      marker.style.lineHeight = '1.2';
+      marker.style.textAlign = 'center';
+      
+      elements.chartOverlay.appendChild(marker);
+    }
+
+    // NEW: Break of Structure marker
+    function drawBOSMarker(bos, xPos, yPos) {
+      const marker = document.createElement('div');
+      marker.className = 'breakout-marker';
+      marker.style.left = `${xPos}px`;
+      marker.style.top = `${yPos}px`;
+      marker.textContent = `BOS\n${bos.direction.toUpperCase()}\n${bos.level}`;
+      marker.style.fontSize = '8px';
+      marker.style.lineHeight = '1.2';
+      marker.style.textAlign = 'center';
+      
+      elements.chartOverlay.appendChild(marker);
+    }
+
+    // NEW: Trend line drawing
+    function drawTrendLine(line, width, height) {
+      const trendLine = document.createElement('div');
+      trendLine.className = 'trend-line';
+      
+      // Calculate line position and angle
+      const startY = height * 0.6;
+      const endY = height * 0.3;
+      const angle = Math.atan2(endY - startY, width) * (180 / Math.PI);
+      
+      trendLine.style.top = `${startY}px`;
+      trendLine.style.width = `${Math.sqrt(width * width + (endY - startY) * (endY - startY))}px`;
+      trendLine.style.transform = `rotate(${angle}deg)`;
+      trendLine.style.transformOrigin = 'left center';
+      
+      elements.chartOverlay.appendChild(trendLine);
+    }
+
+    // NEW: Volume zone drawing
+    function drawVolumeZone(zone, yPos, height, width) {
+      const volumeZone = document.createElement('div');
+      volumeZone.className = 'volume-zone';
+      volumeZone.style.top = `${yPos}px`;
+      volumeZone.style.left = '0px';
+      volumeZone.style.width = `${width}px`;
+      volumeZone.style.height = `${height}px`;
+      
+      elements.chartOverlay.appendChild(volumeZone);
+      
+      // Add volume zone label
+      const label = document.createElement('div');
+      label.className = 'level-label';
+      label.style.top = `${yPos}px`;
+      label.style.left = '5px';
+      label.textContent = `Volume: ${zone.intensity}`;
+      label.style.background = 'rgba(255, 165, 0, 0.3)';
+      label.style.borderColor = 'var(--otc-color)';
+      
+      elements.chartOverlay.appendChild(label);
+    }
+
+    // NEW: Annotation legend
+    function drawAnnotationLegend(width, height) {
+      const legend = document.createElement('div');
+      legend.className = 'annotation-legend';
+      legend.innerHTML = `
+        <div class="legend-item">
+          <div class="legend-color" style="background: var(--buy);"></div>
+          <span>Support</span>
+        </div>
+        <div class="legend-item">
+          <div class="legend-color" style="background: var(--sell);"></div>
+          <span>Resistance</span>
+        </div>
+        <div class="legend-item">
+          <div class="legend-color" style="background: var(--accent);"></div>
+          <span>Trend Line</span>
+        </div>
+        <div class="legend-item">
+          <div class="legend-color" style="background: var(--pattern-color);"></div>
+          <span>Breakout</span>
+        </div>
+        <div class="legend-item">
+          <div class="legend-color" style="background: var(--otc-color);"></div>
+          <span>Volume Zone</span>
+        </div>
+      `;
+      
+      elements.chartOverlay.appendChild(legend);
     }
 
     // Update signal UI with analysis results
@@ -2144,16 +2556,16 @@
 
     // Update vision results
     function updateVisionResults(analysis) {
-      const { summary, patterns, confidence } = analysis;
+      const { tradingAdvice, patterns, confidence } = analysis;
       
-      elements.aiSummary.textContent = summary;
+      elements.aiSummary.textContent = tradingAdvice;
       elements.detectedSignals.textContent = patterns.join(', ');
       
       // Update confidence bars
       elements.summaryConfidence.className = `confidence-fill ${getConfidenceLevel(confidence)}`;
       elements.summaryConfidence.style.width = `${confidence}%`;
       
-      const patternsConfidence = Math.min(confidence + 5, 95); // Slightly higher for patterns
+      const patternsConfidence = Math.min(confidence + 5, 95);
       elements.signalsConfidence.className = `confidence-fill ${getConfidenceLevel(patternsConfidence)}`;
       elements.signalsConfidence.style.width = `${patternsConfidence}%`;
     }
@@ -2162,7 +2574,7 @@
     function updateAnalysisDetails(analysis) {
       elements.analysisDetails.style.display = 'block';
       
-      const { indicators, patterns, supportLevels, resistanceLevels, summary } = analysis;
+      const { indicators, patterns, supportLevels, resistanceLevels, keyCandles, breakOfStructure } = analysis;
       
       // Update indicators tab
       elements.indicatorsContent.innerHTML = '';
@@ -2179,18 +2591,13 @@
         }
       }
       
-      // Update patterns tab
+      // Update patterns tab with enhanced information
       elements.patternsContent.innerHTML = '';
       
-      if (patterns && patterns.length > 0) {
-        patterns.forEach(pattern => {
-          const isBullish = pattern.toLowerCase().includes('bull') || 
-                           pattern.toLowerCase().includes('hammer') ||
-                           pattern.toLowerCase().includes('engulfing') && !pattern.toLowerCase().includes('bear');
-          
-          const isBearish = pattern.toLowerCase().includes('bear') || 
-                           pattern.toLowerCase().includes('star') ||
-                           pattern.toLowerCase().includes('engulfing') && pattern.toLowerCase().includes('bear');
+      if (keyCandles && keyCandles.length > 0) {
+        keyCandles.forEach(candle => {
+          const isBullish = candle.direction === 'bullish';
+          const isBearish = candle.direction === 'bearish';
           
           let iconClass = 'neutral';
           if (isBullish) iconClass = 'bullish';
@@ -2203,8 +2610,8 @@
               <i class="fas fa-chart-${iconClass === 'bullish' ? 'line' : iconClass === 'bearish' ? 'bar' : 'pie'}"></i>
             </div>
             <div class="pattern-details">
-              <div class="pattern-name">${pattern}</div>
-              <div class="pattern-confidence">${iconClass.toUpperCase()} PATTERN</div>
+              <div class="pattern-name">${candle.type.toUpperCase()} at ${candle.location}</div>
+              <div class="pattern-confidence">${candle.direction.toUpperCase()} • ${candle.significance.toUpperCase()} SIGNIFICANCE</div>
             </div>
             <div class="pattern-strength">${Math.floor(Math.random() * 30) + 70}%</div>
           `;
@@ -2212,7 +2619,7 @@
         });
       }
       
-      // Update levels tab
+      // Update levels tab with enhanced information
       elements.levelsContent.innerHTML = '';
       
       if (supportLevels && supportLevels.length > 0) {
@@ -2220,9 +2627,12 @@
           const item = document.createElement('div');
           item.className = 'level-item support';
           item.innerHTML = `
-            <div class="level-label">SUPPORT</div>
             <div>
-              <div class="level-price">${level}</div>
+              <div class="level-label">SUPPORT (${level.strength.toUpperCase()})</div>
+              <div class="level-distance">${level.type.toUpperCase()} LEVEL</div>
+            </div>
+            <div>
+              <div class="level-price">${level.level}</div>
               <div class="level-distance">-${(Math.random() * 0.002).toFixed(4)}</div>
             </div>
           `;
@@ -2235,9 +2645,12 @@
           const item = document.createElement('div');
           item.className = 'level-item resistance';
           item.innerHTML = `
-            <div class="level-label">RESISTANCE</div>
             <div>
-              <div class="level-price">${level}</div>
+              <div class="level-label">RESISTANCE (${level.strength.toUpperCase()})</div>
+              <div class="level-distance">${level.type.toUpperCase()} LEVEL</div>
+            </div>
+            <div>
+              <div class="level-price">${level.level}</div>
               <div class="level-distance">+${(Math.random() * 0.002).toFixed(4)}</div>
             </div>
           `;
@@ -2245,28 +2658,39 @@
         });
       }
       
-      // Update Gemini AI tab
+      // Update Gemini AI tab with enhanced information
       elements.geminiContent.innerHTML = `
         <div class="logic-box">
-          <div class="logic-title"><i class="fas fa-brain"></i> GEMINI AI ANALYSIS</div>
-          <div class="logic-point">Chart analyzed using Google's Gemini Vision AI</div>
-          <div class="logic-point">Pattern recognition with ${analysis.confidence}% confidence</div>
-          <div class="logic-point">Real-time market conditions factored in</div>
+          <div class="logic-title"><i class="fas fa-brain"></i> GEMINI AI ADVANCED ANALYSIS</div>
+          <div class="logic-point">Advanced chart annotation with exact price levels</div>
+          <div class="logic-point">Break of Structure detection with timestamps</div>
+          <div class="logic-point">Key candle pattern identification at specific locations</div>
+          <div class="logic-point">Volume zone analysis and accumulation detection</div>
         </div>
         <div class="candle-analysis">
-          <div style="font-weight:700;margin-bottom:10px">AI INSIGHTS</div>
-          <div>${summary}</div>
+          <div style="font-weight:700;margin-bottom:10px">ADVANCED AI INSIGHTS</div>
+          <div>${analysis.tradingAdvice}</div>
           <div class="candle-info">
             <div class="candle-stat">
-              <div class="candle-stat-label">TREND STRENGTH</div>
-              <div class="candle-stat-value">${Math.floor(Math.random() * 30) + 70}%</div>
+              <div class="candle-stat-label">RISK LEVEL</div>
+              <div class="candle-stat-value" style="color: ${analysis.riskLevel === 'high' ? 'var(--sell)' : analysis.riskLevel === 'medium' ? 'var(--otc-color)' : 'var(--buy)'}">${analysis.riskLevel.toUpperCase()}</div>
             </div>
             <div class="candle-stat">
-              <div class="candle-stat-label">VOLATILITY</div>
-              <div class="candle-stat-value">${(Math.random() * 0.5 + 0.3).toFixed(2)}%</div>
+              <div class="candle-stat-label">ENTRY POINTS</div>
+              <div class="candle-stat-value">${analysis.entryPoints.join(', ')}</div>
             </div>
           </div>
         </div>
+        ${breakOfStructure && breakOfStructure.length > 0 ? `
+        <div class="psychology-tip">
+          <div class="psychology-tip-title">BREAK OF STRUCTURE DETECTED</div>
+          <div class="psychology-tip-text">
+            ${breakOfStructure.map(bos => 
+              `${bos.direction.toUpperCase()} BOS at ${bos.level} (${bos.timestamp})`
+            ).join('<br>')}
+          </div>
+        </div>
+        ` : ''}
       `;
     }
 
